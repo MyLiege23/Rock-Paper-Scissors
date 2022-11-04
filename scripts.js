@@ -59,6 +59,13 @@ function playRPS(#):
   switch (outcome)
   */
 
+
+
+
+
+
+  //Second solution below===========================================
+  /*
 let rpsOptions = ["rock", "paper", "scissors"];
 
 function getComputerChoice() {
@@ -122,4 +129,36 @@ function playRPSOutOf(n) {
     "Player Score: " + playerScore + " \nComputer Score: " + computerScore;
   console.log(gameScore);
   return gameScore;
+}
+*/
+
+
+
+
+
+//Third Solution Below ====================================
+
+let rpsOptions = ["rock", "paper", "scissors"];
+const outcomes = {
+  playerWins: 1,
+  tie: 0,
+  computerWins: -1
+}
+
+function getComputerChoice() {
+  return rpsOptions[~~(Math.random() * rpsOptions.length)];
+}
+
+function getPlayerChoice() {
+  return prompt("Rock, paper, or scissors?").toLowerCase();
+}
+
+function rpsWhoWon(computerChoice, playerChoice) {
+  return computerChoice === playerChoice ? outcomes.tie
+  : playerChoice === "paper" && computerChoice === "rock" ? outcomes.playerWins
+  : playerChoice === "scissors" && computerChoice === "paper" ? outcomes.playerWins
+  : playerChoice === "rock" && computerChoice === "scissors" ? outcomes.playerWins
+  : playerChoice === "paper" && computerChoice === "scissors" ? outcomes.computerWins
+  : playerChoice === "rock" && computerChoice === "paper" ? outcomes.computerWins
+  : playerChoice === "scissors" && computerChoice === "rock" ? outcomes.computerWins
 }
