@@ -59,13 +59,8 @@ function playRPS(#):
   switch (outcome)
   */
 
-
-
-
-
-
-  //Second solution below===========================================
-  /*
+//Second solution below===========================================
+/*
 let rpsOptions = ["rock", "paper", "scissors"];
 
 function getComputerChoice() {
@@ -132,18 +127,14 @@ function playRPSOutOf(n) {
 }
 */
 
-
-
-
-
 //Third Solution Below ====================================
 
 let rpsOptions = ["rock", "paper", "scissors"];
 const outcomes = {
   playerWins: 1,
   tie: 0,
-  computerWins: -1
-}
+  computerWins: -1,
+};
 
 function getComputerChoice() {
   return rpsOptions[~~(Math.random() * rpsOptions.length)];
@@ -154,11 +145,63 @@ function getPlayerChoice() {
 }
 
 function rpsWhoWon(computerChoice, playerChoice) {
-  return computerChoice === playerChoice ? outcomes.tie
+  if (computerChoice === playerChoice) {
+    return outcomes.tie;
+  } else if (computerChoice === "rock") {
+    return playerChoice === "paper"
+      ? outcomes.playerWins
+      : outcomes.computerWins;
+  } else if (computerChoice === "paper") {
+    return playerChoice === "scissors"
+      ? outcomes.playerWins
+      : outcomes.computerWins;
+  } else if (computerChoice === "scissors") {
+    return playerChoice === "rock"
+      ? outcomes.playerWins
+      : outcomes.computerWins;
+  }
+}
+
+function playRPSOutOf(n) {
+  let computerScore = 0;
+  let playerScore = 0;
+  while (computerScore + playerScore < n) {
+    let playerChoice = getPlayerChoice();
+    let computerChoice = getComputerChoice();
+    console.log("Player: " + playerChoice);
+    console.log("Computer: " + computerChoice);
+    let score = rpsWhoWon(computerChoice, playerChoice);
+    switch (score) {
+      case outcomes.computerWins:
+        console.log("Computer won!");
+        computerScore++;
+        break;
+      case outcomes.playerWins:
+        console.log("Player won!");
+        playerScore++;
+        break;
+      case outcomes.tie:
+        console.log("Tie!");
+        break;
+    }
+  }
+  let gameScore = `Player Score: ${playerScore}; 
+    \nComputer Score: ${computerScore}; 
+    \nGame Score: ${gameScore}.`;
+  return gameScore;
+}
+
+/*
+
+I overdid the ternary...
+
+function rpsWhoWon(computerChoice, playerChoice) {
+  return (computerChoice === playerChoice ? outcomes.tie
   : playerChoice === "paper" && computerChoice === "rock" ? outcomes.playerWins
   : playerChoice === "scissors" && computerChoice === "paper" ? outcomes.playerWins
   : playerChoice === "rock" && computerChoice === "scissors" ? outcomes.playerWins
   : playerChoice === "paper" && computerChoice === "scissors" ? outcomes.computerWins
   : playerChoice === "rock" && computerChoice === "paper" ? outcomes.computerWins
-  : playerChoice === "scissors" && computerChoice === "rock" ? outcomes.computerWins
+  : outcomes.computerWins);
 }
+*/
