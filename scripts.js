@@ -10,8 +10,7 @@ const outcomes = {
 };
 
 function getComputerChoice() {
-  const choice = rpsOptions[~~(Math.random() * rpsOptions.length)];
-  return choice;
+  return rpsOptions[Math.round(Math.random() * rpsOptions.length)];
 }
 
 /*
@@ -21,7 +20,7 @@ function getPlayerChoice() {
 */
 const gameStatus = document.querySelector(".status-text");
 const explanation = document.querySelector(".explanation-text");
-const playerOptionsMenu = document.querySelector(".player-options");
+const playerOptionsMenu = document.querySelector(".player-options-menu");
 let playerOptions = Array.from(document.querySelectorAll(".player-option"));
 
 const retryButton = document.createElement("button");
@@ -42,12 +41,12 @@ playerOptions.forEach((optionElement) => {
     const computerChoice = getComputerChoice();
     const playerChoice = optionElement.id;
     const result = rpsWhoWon(computerChoice, playerChoice);
-    if (result == outcomes.playerWins) {
+    if (result === outcomes.playerWins) {
       gameStatus.textContent = "You won!";
       explanation.textContent = `${playerChoice} beats ${computerChoice}`;
       playerScore++;
       playerScoreDisplay.textContent = `${playerScore}`;
-    } else if (result == outcomes.computerWins) {
+    } else if (result === outcomes.computerWins) {
       gameStatus.textContent = "You lost!";
       explanation.textContent = `${computerChoice} beats ${playerChoice}`;
       computerScore++;
@@ -60,17 +59,14 @@ playerOptions.forEach((optionElement) => {
   });
 });
 
-let gameOverAlert = function () {
-  if (computerScore == 5 || playerScore == 5) {
-    playerScore == 5
+let gameOverAlert = () => {
+  if (computerScore === 5 || playerScore === 5) {
+    playerScore === 5
       ? ((gameStatus.textContent = "You Made It!"),
         (explanation.textContent = "You were the first to 5"))
       : ((gameStatus.textContent = "Tough luck!"),
         (explanation.textContent = "The computer made it to 5 first"));
-    while (playerOptionsMenu.firstChild) {
-      playerOptionsMenu.removeChild(playerOptionsMenu.firstChild);
-    }
-    playerOptionsMenu.appendChild(retryButton);
+    playerOptionsMenu.replaceChildren(retryButton);
   }
 };
 
@@ -79,10 +75,7 @@ retryButton.addEventListener("click", () => {
   playerScoreDisplay.textContent = `${playerScore}`;
   computerScore = 0;
   computerScoreDisplay.textContent = `${computerScore}`;
-  playerOptionsMenu.removeChild(retryButton);
-  playerOptions.forEach((optionElement) => {
-    playerOptionsMenu.appendChild(optionElement);
-  });
+  playerOptionsMenu.replaceChildren(...playerOptions);
 });
 
 function rpsWhoWon(computerChoice, playerChoice) {
